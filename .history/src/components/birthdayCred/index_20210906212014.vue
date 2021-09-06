@@ -37,8 +37,6 @@ export default {
   margin-top: 10px;
   margin-bottom: 10px;
   position: relative;
-  user-select:none;
-  cursor: pointer;
 
   .title {
     font-size: 30px;

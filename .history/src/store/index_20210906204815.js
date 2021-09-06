@@ -5,8 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    bodyWidth: document.body.offsetWidth,
-    isMobile: document.body.offsetWidth <= 960,
+    bodyWidth: 0,
+    isMobile: false,
   },
   mutations: {
     SET_BODY_WIDTH(state, value) {

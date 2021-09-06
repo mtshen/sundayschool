@@ -13,9 +13,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="birthdayTime" label="生日" sortable></el-table-column>
-        <el-table-column prop="address" label="性别"></el-table-column>
         <el-table-column prop="address" label="年龄" sortable></el-table-column>
-        <el-table-column prop="address" label="星座"></el-table-column>
       </el-table>
     </template>
   </div>

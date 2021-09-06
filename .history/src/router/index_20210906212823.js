@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/pc',
+    path: '/',
     name: 'pc',
     component: () => import('@/views/index.vue'),
     children: [

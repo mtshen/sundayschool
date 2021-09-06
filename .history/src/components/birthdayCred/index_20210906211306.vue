@@ -37,22 +37,19 @@ export default {
   margin-top: 10px;
   margin-bottom: 10px;
   position: relative;
-  user-select:none;
-  cursor: pointer;
 
   .title {
-    font-size: 30px;
+    font-size: 40px;
     position: absolute;
     left: 3%;
     top: 3%;
   }
 
   .value {
-    font-size: 70px;
+    font-size: 60px;
     position: absolute;
     left: 50%;
     top: 50%;
-    color: #000;
     transform: translate(-50%, -50%);
   }
 

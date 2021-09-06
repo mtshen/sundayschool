@@ -10,20 +10,13 @@ Vue.config.productionTip = false;
 
 // 路由守卫
 router.beforeEach((to, from, next)=> {
+  debugger;
   const { fullPath } = to;
   const { isMobile } = store.state;
-  let path = '/';
-  if (!/\/(m|pc)\//.exec(fullPath)) {
-    return next();
-  } else if (isMobile) {
-    path = fullPath.replace('/pc/', '/m/');
+  if (isMobile) {
+    next(fullPath.replace('/pc/', '/m/'));
   } else {
-    path = fullPath.replace('/m/', '/pc/');
-  }
-  if (path === fullPath) {
-    next();
-  } else {
-    next(path);
+    next(fullPath.replace('/m/', '/pc/'));
   }
 })
 

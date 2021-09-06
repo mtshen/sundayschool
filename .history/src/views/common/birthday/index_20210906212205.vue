@@ -5,18 +5,18 @@
         <el-col class="item startItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本月生日" value="1" color="#cad9fd" /></el-col>
         <el-col class="item" :xs="24" :md="12" :lg="8"><BirthdayCred title="本周生日" value="1" color="#ba9dde" /></el-col>
         <el-col class="item endItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本日生日" value="1" color="#eb746e" /></el-col>
+        <el-col class="item" :xs="24" :md="12" :lg="24">
+          <el-table size="mini" :data="tableData" style="width: 100%">
+            <el-table-column prop="name" label="姓名" sortable>
+              <template slot-scope="scope">
+                <el-button type="text" size="mini">{{ getNameItem(scope.row) }}</el-button>
+              </template>
+            </el-table-column>
+            <el-table-column prop="birthdayTime" label="生日" sortable></el-table-column>
+            <el-table-column prop="address" label="年龄" sortable></el-table-column>
+          </el-table>
+        </el-col>
       </el-row>
-      <el-table size="mini" :data="tableData" style="width: 100%">
-        <el-table-column prop="name" label="姓名" sortable>
-          <template slot-scope="scope">
-            <el-button type="text" size="mini">{{ getNameItem(scope.row) }}</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column prop="birthdayTime" label="生日" sortable></el-table-column>
-        <el-table-column prop="address" label="性别"></el-table-column>
-        <el-table-column prop="address" label="年龄" sortable></el-table-column>
-        <el-table-column prop="address" label="星座"></el-table-column>
-      </el-table>
     </template>
   </div>
 </template>

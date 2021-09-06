@@ -1,8 +1,7 @@
 <template>
   <div class="credItem" :style="{ background: color }">
     <span class="title">{{ title }}</span>
-    <span class="value">{{ value }}</span>
-    <span class="company">人</span>
+    <span class="value">{{ value }} 人</span>
   </div>
 </template>
 
@@ -37,30 +36,12 @@ export default {
   margin-top: 10px;
   margin-bottom: 10px;
   position: relative;
-  user-select:none;
-  cursor: pointer;
 
   .title {
-    font-size: 30px;
+    font-size: 40px;
     position: absolute;
     left: 3%;
     top: 3%;
-  }
-
-  .value {
-    font-size: 70px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    color: #000;
-    transform: translate(-50%, -50%);
-  }
-
-  .company {
-    position: absolute;
-    font-size: 30px;
-    right: 3%;
-    bottom: 3%;
   }
 }
 </style>
