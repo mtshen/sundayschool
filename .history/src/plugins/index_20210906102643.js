@@ -1,2 +1,0 @@
-import './mintUi';
-import './elementUi';
