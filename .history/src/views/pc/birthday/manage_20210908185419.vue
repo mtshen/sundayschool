@@ -13,7 +13,7 @@
         </el-table-column>
 
         <!-- 年龄 -->
-        <el-table-column label="生日" width="180px" >
+        <el-table-column label="年龄" width="180px" >
           <template slot-scope="scope">
             {{ getAgeName(scope.row) }}
           </template>
@@ -44,6 +44,7 @@
 import { queryBirthdayManage, removeBirthdayManage } from "@/api/birthday";
 import EditDialog from "./editDialog.vue";
 import dayjs from "dayjs";
+
 
 export default {
   props: {},

@@ -2,9 +2,9 @@
   <div>
     <template>
       <el-row class="rowItem" :gutter="20">
-        <el-col class="item startItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本月生日" :value="monthList" color="#F8A94A" /></el-col>
-        <!-- <el-col class="item" :xs="24" :md="12" :lg="8"><BirthdayCred title="本周生日" :value="weekList" color="#ba9dde" /></el-col> -->
-        <el-col class="item endItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本日生日" :value="dayList" color="#eb746e" /></el-col>
+        <el-col class="item startItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本月生日" :value="dayList" color="#F8A94A" /></el-col>
+        <el-col class="item" :xs="24" :md="12" :lg="8"><BirthdayCred title="本周生日" :value="weekList" color="#ba9dde" /></el-col>
+        <el-col class="item endItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本日生日" :value="monthList" color="#eb746e" /></el-col>
       </el-row>
       <el-table size="mini" :data="tableData" style="width: 100%">
         <el-table-column prop="name" label="姓名" sortable>
@@ -23,11 +23,8 @@
             {{ ["", "男", "女"][scope.row.gender] }}
           </template>
         </el-table-column>
-        <el-table-column label="年龄" sortable>
-          <template slot-scope="scope">
-            {{ getAgeName(scope.row) }}
-          </template>
-        </el-table-column>
+        <el-table-column prop="address" label="年龄" sortable></el-table-column>
+        <el-table-column prop="constellation" label="星座"></el-table-column>
       </el-table>
     </template>
   </div>
@@ -53,6 +50,8 @@ export default {
       const { tableData } = this;
       return tableData.map(item => {
         const itemData = { ...item };
+        const curItemDay = dayjs(item.birthdayTime);
+        itemData.constellation = getConstellation(curItemDay.month(), curItemDay.day());
         return itemData;
       });
     },
@@ -75,7 +74,7 @@ export default {
       const { tableData, curMonth, curDay } = this;
       return tableData.filter(item => {
         const curItemMonth = dayjs(item.birthdayTime).month();
-        const curItemDay = dayjs(item.birthdayTime).date();
+        const curItemDay = dayjs(item.birthdayTime).day();
         return curItemMonth === curMonth && curItemDay === curDay;
       });
     },
@@ -98,22 +97,13 @@ export default {
       return rtnName;
     },
     getBirthDayText(row) {
-      return dayjs(row.birthdayTime).format("MM-DD");
+      dayjs(row.birthdayTime).format("MM-DD");
     },
-    getAgeName(row) {
-      const curDateItem = dayjs(row.birthdayTime);
-      const thatDateItem = dayjs();
-      const curYear = curDateItem.year();
-      const thatYear = thatDateItem.year();
-      const curDay = curDateItem.dayOfYear();
-      const thatDay = thatDateItem.dayOfYear();
-
-      // 只要大于0, 即过了生日
-      if (thatDay - curDay > 0) {
-        return `${thatYear - curYear}岁`;
-      } else {
-        return `${thatYear - curYear - 1}岁`;
-      }
+    // 查询星座
+    getConstellation(m, d){
+      const s="魔羯水瓶双鱼牡羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯";
+      const arr=[20,19,21,21,21,22,23,23,23,23,22,22];
+      return s.substr(m*2-(d<arr[m-1]?2:0),2);
     }
   },
   components: { BirthdayCred },

@@ -1,9 +1,6 @@
 <template>
-  <div class="content">
-    <div class="btns">
-      <el-button size="mini" type="primary" @click="addItem">添加成员</el-button>
-    </div>
-    <div class="table">
+  <div class="birthdayManage">
+    <div class="content" v-show="!popupVisible">
       <el-table :data="curTableData" style="width: 100%">
         <!-- 名称 -->
         <el-table-column label="名字" prop="name">
@@ -13,7 +10,7 @@
         </el-table-column>
 
         <!-- 年龄 -->
-        <el-table-column label="生日" width="180px" >
+        <el-table-column label="年龄" width="180px">
           <template slot-scope="scope">
             {{ getAgeName(scope.row) }}
           </template>
@@ -35,15 +32,17 @@
         </el-table-column>
       </el-table>
     </div>
-
-    <EditDialog :visible.sync="dialogVisible" :initVal="curVal" v-if="dialogVisible" @save="save" />
+    <div></div>
+    <el-button v-show="!popupVisible" size="mini" class="addBtn" type="primary" @click="addItem"
+      >新增</el-button
+    >
+    <AddDialog v-show="popupVisible" />
   </div>
 </template>
 
 <script>
 import { queryBirthdayManage, removeBirthdayManage } from "@/api/birthday";
-import EditDialog from "./editDialog.vue";
-import dayjs from "dayjs";
+import AddDialog from "./add.vue";
 
 export default {
   props: {},
@@ -51,8 +50,7 @@ export default {
     return {
       search: "",
       tableData: [],
-      curVal: null,
-      dialogVisible: false
+      popupVisible: false
     };
   },
   computed: {
@@ -70,18 +68,15 @@ export default {
   async created() {
     await this.queryBirthdayManage();
   },
+  mounted() {},
+  watch: {},
   methods: {
     async queryBirthdayManage() {
       const { data } = await queryBirthdayManage();
       this.tableData = data;
     },
     addItem() {
-      this.curVal = null;
-      this.dialogVisible = true;
-    },
-    handleEdit(row) {
-      this.curVal = row;
-      this.dialogVisible = true;
+      this.popupVisible = true;
     },
     handleDelete(row) {
       removeBirthdayManage({ id: row.id }).then(({ code, data }) => {
@@ -90,15 +85,13 @@ export default {
         }
       });
     },
+
     getItemName(row) {
       let name = row.name;
       if (row.nickName) {
         name += `(${row.nickName})`;
       }
       return name;
-    },
-    save() {
-      this.queryBirthdayManage();
     },
     getAgeName(row) {
       const curDateItem = dayjs(row.birthdayTime);
@@ -119,21 +112,27 @@ export default {
       return time;
     }
   },
-  components: { EditDialog }
+  components: { AddDialog }
 };
 </script>
 
 <style scoped lang="scss">
+.addBtn {
+  width: 100%;
+  height: 40px;
+  border-radius: 0px;
+}
+
 .content {
+  flex: 1;
+  overflow: auto;
+}
+
+.birthdayManage {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-
-  .btns {
-    text-align: left;
-    padding: 10px;
-  }
 }
 </style>

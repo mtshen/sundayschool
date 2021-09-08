@@ -115,7 +115,7 @@ export default {
           request.then(({ code, data }) => {
             if (!code) {
               this.$emit("save");
-              this.cancel();
+              this.handleClose();
             }
           });
         }

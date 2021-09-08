@@ -13,7 +13,7 @@
         </el-table-column>
 
         <!-- 年龄 -->
-        <el-table-column label="生日" width="180px" >
+        <el-table-column label="年龄">
           <template slot-scope="scope">
             {{ getAgeName(scope.row) }}
           </template>
@@ -27,7 +27,11 @@
         </el-table-column>
 
         <!-- 菜单 -->
-        <el-table-column width="200px" label="操作" align="right">
+        <el-table-column align="right">
+          <template slot="header">
+            <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
+          </template>
+
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.row)">修改</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
@@ -43,7 +47,7 @@
 <script>
 import { queryBirthdayManage, removeBirthdayManage } from "@/api/birthday";
 import EditDialog from "./editDialog.vue";
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export default {
   props: {},
@@ -52,24 +56,24 @@ export default {
       search: "",
       tableData: [],
       curVal: null,
-      dialogVisible: false
+      dialogVisible: false,
     };
   },
   computed: {
     curTableData() {
       const { tableData, search } = this;
-      return search
-        ? tableData.filter(item => {
-            const { nickName, name } = item;
-            return (nickName || "").includes(search) || name.includes(search);
-          })
-        : tableData;
+      return search ? tableData.filter(item => {
+        const { nickName, name } = item;
+        return (nickName || '').includes(search) || name.includes(search);
+      }) : tableData;
     }
   },
 
   async created() {
     await this.queryBirthdayManage();
   },
+  mounted() {},
+  watch: {},
   methods: {
     async queryBirthdayManage() {
       const { data } = await queryBirthdayManage();
@@ -102,22 +106,13 @@ export default {
     },
     getAgeName(row) {
       const curDateItem = dayjs(row.birthdayTime);
-      const thatDateItem = dayjs();
       const curYear = curDateItem.year();
-      const thatYear = thatDateItem.year();
-      const curDay = curDateItem.dayOfYear();
-      const thatDay = thatDateItem.dayOfYear();
-      let time = curDateItem.format("YYYY-MM-DD");
+      const curMonth = curDateItem.month();
+      const curDay = curDateItem.date();
 
-      // 只要大于0, 即过了生日
-      if (thatDay - curDay > 0) {
-        time += `(${thatYear - curYear}岁)`;
-      } else {
-        time += `(${thatYear - curYear - 1}岁)`;
-      }
       // 检查日期是否过了今日
-      return time;
-    }
+      return curDateItem.format("YYYY-MM-DD");
+    },
   },
   components: { EditDialog }
 };

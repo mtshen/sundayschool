@@ -13,7 +13,7 @@
         </el-table-column>
 
         <!-- 年龄 -->
-        <el-table-column label="生日" width="180px" >
+        <el-table-column label="年龄" width="180px" >
           <template slot-scope="scope">
             {{ getAgeName(scope.row) }}
           </template>

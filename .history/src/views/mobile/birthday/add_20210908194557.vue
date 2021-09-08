@@ -1,7 +1,5 @@
 <template>
-  <!-- 遮罩层 -->
   <div class="marageAdd">
-    <!-- <div class="dialogMask"></div> -->
     <div class="addBox" :class="{ notAdd: !addDialogVis }">
       <el-form
         size="mini"
@@ -44,21 +42,10 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-button v-if="!addDialogVis" size="mini" class="addBtn" type="primary" @click="addItem"
-      >新增</el-button
-    >
-    <el-row v-if="addDialogVis">
-      <el-col :span="12">
-        <el-button size="mini" class="addBtn" type="primary" @click="updateItem">
-          {{ initVal ? "更新" : "新增" }}
-        </el-button>
-      </el-col>
-      <el-col :span="12">
-        <el-button size="mini" class="addBtn" @click="cancel">
-          取消
-        </el-button>
-      </el-col>
-    </el-row>
+    <el-button v-if="!addDialogVis" size="mini" class="addBtn" type="primary" @click="addItem">新增</el-button>
+    <el-button v-if="addDialogVis" size="mini" class="addBtn" type="primary" @click="updateItem">
+      {{ initVal ? "更新" : "新增" }}
+    </el-button>
   </div>
 </template>
 
@@ -69,7 +56,7 @@ import dayjs from "dayjs";
 
 export default {
   props: {
-    initVal: Object
+    initVal: Object,
   },
   data() {
     return {
@@ -95,7 +82,7 @@ export default {
       this.ruleForm.nickName = data.nickName || "";
       this.ruleForm.gender = data.gender || "";
       this.ruleForm.birthdayTime = data.birthdayTime || "";
-    }
+    },
   },
   methods: {
     addItem() {
@@ -103,31 +90,8 @@ export default {
     },
     handleClose() {},
     updateItem() {
-      this.$refs.ruleForm.validate(valid => {
-        if (valid) {
-          let request;
-          const birthdayTime = dayjs(this.ruleForm.birthdayTime).format("YYYY-MM-DD");
-          if (this.initVal) {
-            request = updateBirthdayManage({ ...this.initVal, ...this.ruleForm, birthdayTime });
-          } else {
-            request = addBirthdayManage({ ...this.ruleForm, birthdayTime });
-          }
-          request.then(({ code, data }) => {
-            if (!code) {
-              this.$emit("save");
-              this.cancel();
-            }
-          });
-        }
-      });
+
     },
-    cancel() {
-      this.addDialogVis = false;
-      this.ruleForm.name = "";
-      this.ruleForm.nickName = "";
-      this.ruleForm.gender = "";
-      this.ruleForm.birthdayTime = "";
-    }
   }
 };
 </script>
@@ -146,7 +110,7 @@ export default {
   .addBox {
     padding-top: 20px;
     height: 250px;
-    transition: all 0.5s;
+    transition: all .5s;
     overflow: hidden;
 
     &.notAdd {
@@ -155,14 +119,6 @@ export default {
     }
   }
 
-  .dialogMask {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 500;
-  }
 }
 .addBtn {
   width: 100%;

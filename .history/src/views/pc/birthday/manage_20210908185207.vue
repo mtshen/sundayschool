@@ -13,7 +13,7 @@
         </el-table-column>
 
         <!-- 年龄 -->
-        <el-table-column label="生日" width="180px" >
+        <el-table-column label="年龄">
           <template slot-scope="scope">
             {{ getAgeName(scope.row) }}
           </template>
@@ -27,7 +27,11 @@
         </el-table-column>
 
         <!-- 菜单 -->
-        <el-table-column width="200px" label="操作" align="right">
+        <el-table-column label="操作" align="right">
+          <!-- <template slot="header"> -->
+          <!-- <el-input v-model="search" size="mini" placeholder="输入关键字搜索" /> -->
+          <!-- </template> -->
+
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.row)">修改</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
@@ -42,8 +46,10 @@
 
 <script>
 import { queryBirthdayManage, removeBirthdayManage } from "@/api/birthday";
+import dayOfYear from "dayjs/plugin/dayOfYear";
 import EditDialog from "./editDialog.vue";
 import dayjs from "dayjs";
+dayjs.extend(dayOfYear);
 
 export default {
   props: {},

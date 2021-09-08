@@ -1,9 +1,6 @@
 <template>
-  <div class="content">
-    <div class="btns">
-      <el-button size="mini" type="primary" @click="addItem">添加成员</el-button>
-    </div>
-    <div class="table">
+  <div class="birthdayManage">
+    <div class="content">
       <el-table :data="curTableData" style="width: 100%">
         <!-- 名称 -->
         <el-table-column label="名字" prop="name">
@@ -13,7 +10,7 @@
         </el-table-column>
 
         <!-- 年龄 -->
-        <el-table-column label="生日" width="180px" >
+        <el-table-column label="生日" width="120px">
           <template slot-scope="scope">
             {{ getAgeName(scope.row) }}
           </template>
@@ -27,22 +24,20 @@
         </el-table-column>
 
         <!-- 菜单 -->
-        <el-table-column width="200px" label="操作" align="right">
+        <el-table-column width="70px" label="操作" align="right">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.row)">修改</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-
-    <EditDialog :visible.sync="dialogVisible" :initVal="curVal" v-if="dialogVisible" @save="save" />
+    <AddDialog />
   </div>
 </template>
 
 <script>
 import { queryBirthdayManage, removeBirthdayManage } from "@/api/birthday";
-import EditDialog from "./editDialog.vue";
+import AddDialog from "./add.vue";
 import dayjs from "dayjs";
 
 export default {
@@ -51,8 +46,7 @@ export default {
     return {
       search: "",
       tableData: [],
-      curVal: null,
-      dialogVisible: false
+      popupVisible: false
     };
   },
   computed: {
@@ -70,18 +64,15 @@ export default {
   async created() {
     await this.queryBirthdayManage();
   },
+  mounted() {},
+  watch: {},
   methods: {
     async queryBirthdayManage() {
       const { data } = await queryBirthdayManage();
       this.tableData = data;
     },
     addItem() {
-      this.curVal = null;
-      this.dialogVisible = true;
-    },
-    handleEdit(row) {
-      this.curVal = row;
-      this.dialogVisible = true;
+      this.popupVisible = true;
     },
     handleDelete(row) {
       removeBirthdayManage({ id: row.id }).then(({ code, data }) => {
@@ -90,15 +81,13 @@ export default {
         }
       });
     },
+
     getItemName(row) {
       let name = row.name;
       if (row.nickName) {
         name += `(${row.nickName})`;
       }
       return name;
-    },
-    save() {
-      this.queryBirthdayManage();
     },
     getAgeName(row) {
       const curDateItem = dayjs(row.birthdayTime);
@@ -107,7 +96,7 @@ export default {
       const thatYear = thatDateItem.year();
       const curDay = curDateItem.dayOfYear();
       const thatDay = thatDateItem.dayOfYear();
-      let time = curDateItem.format("YYYY-MM-DD");
+      let time = curDateItem.format("MM-DD");
 
       // 只要大于0, 即过了生日
       if (thatDay - curDay > 0) {
@@ -119,21 +108,22 @@ export default {
       return time;
     }
   },
-  components: { EditDialog }
+  components: { AddDialog }
 };
 </script>
 
 <style scoped lang="scss">
 .content {
+  flex: 1;
+  overflow: auto;
+  padding-bottom: 40px;
+}
+
+.birthdayManage {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-
-  .btns {
-    text-align: left;
-    padding: 10px;
-  }
 }
 </style>

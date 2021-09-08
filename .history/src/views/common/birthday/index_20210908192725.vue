@@ -1,9 +1,9 @@
 <template>
   <div>
     <template>
-      <el-row class="rowItem" :gutter="20">
+      <el-row class="rowItem" :gutter="20" v-show="false">
         <el-col class="item startItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本月生日" :value="monthList" color="#F8A94A" /></el-col>
-        <!-- <el-col class="item" :xs="24" :md="12" :lg="8"><BirthdayCred title="本周生日" :value="weekList" color="#ba9dde" /></el-col> -->
+        <el-col class="item" :xs="24" :md="12" :lg="8"><BirthdayCred title="本周生日" :value="weekList" color="#ba9dde" /></el-col>
         <el-col class="item endItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本日生日" :value="dayList" color="#eb746e" /></el-col>
       </el-row>
       <el-table size="mini" :data="tableData" style="width: 100%">
