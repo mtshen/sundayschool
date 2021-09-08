@@ -1,8 +1,6 @@
 <template>
-  <div class="credItem" :style="{ background: color }" @click="changeDetails">
-    <template v-if="isDetails && value.length">
-
-    </template>
+  <div class="credItem" :style="{ background: color }">
+    <template v-if="isDetails && value.length"></template>
     <template v-else>
       <span class="title">{{ title }}</span>
       <span class="value">{{ value.length }}</span>
@@ -27,11 +25,7 @@ export default {
   created() {},
   mounted() {},
   watch: {},
-  methods: {
-    changeDetails() {
-      this.isDetails = !this.isDetails;
-    },
-  },
+  methods: {},
   components: {}
 };
 </script>
@@ -42,7 +36,7 @@ export default {
   border: 1px solid #ebeef5;
   background-color: #fff;
   overflow: hidden;
-  color: #FFF;
+  color: #303133;
   transition: 0.3s;
   height: 200px;
   margin-top: 10px;
@@ -63,7 +57,7 @@ export default {
     position: absolute;
     left: 50%;
     top: 50%;
-    color: #FFF;
+    color: #000;
     transform: translate(-50%, -50%);
   }
 

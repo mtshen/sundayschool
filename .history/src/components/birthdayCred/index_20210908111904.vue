@@ -1,13 +1,8 @@
 <template>
-  <div class="credItem" :style="{ background: color }" @click="changeDetails">
-    <template v-if="isDetails && value.length">
-
-    </template>
-    <template v-else>
-      <span class="title">{{ title }}</span>
-      <span class="value">{{ value.length }}</span>
-      <span class="company">人</span>
-    </template>
+  <div class="credItem" :style="{ background: color }">
+    <span class="title">{{ title }}</span>
+    <span class="value">{{ value.length }}</span>
+    <span class="company">人</span>
   </div>
 </template>
 
@@ -15,23 +10,17 @@
 export default {
   props: {
     title: String,
-    value: Array,
+    value: String,
     color: String
   },
   data() {
-    return {
-      isDetails: false
-    };
+    return {};
   },
   computed: {},
   created() {},
   mounted() {},
   watch: {},
-  methods: {
-    changeDetails() {
-      this.isDetails = !this.isDetails;
-    },
-  },
+  methods: {},
   components: {}
 };
 </script>
@@ -42,13 +31,13 @@ export default {
   border: 1px solid #ebeef5;
   background-color: #fff;
   overflow: hidden;
-  color: #FFF;
+  color: #303133;
   transition: 0.3s;
   height: 200px;
   margin-top: 10px;
   margin-bottom: 10px;
   position: relative;
-  user-select: none;
+  user-select:none;
   cursor: pointer;
 
   .title {
@@ -63,7 +52,7 @@ export default {
     position: absolute;
     left: 50%;
     top: 50%;
-    color: #FFF;
+    color: #000;
     transform: translate(-50%, -50%);
   }
 

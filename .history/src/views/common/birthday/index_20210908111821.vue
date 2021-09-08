@@ -2,7 +2,7 @@
   <div>
     <template>
       <el-row class="rowItem" :gutter="20">
-        <el-col class="item startItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本月生日" :value="dayList" color="#F8A94A" /></el-col>
+        <el-col class="item startItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本月生日" :value="dayList" color="#cad9fd" /></el-col>
         <el-col class="item" :xs="24" :md="12" :lg="8"><BirthdayCred title="本周生日" :value="weekList" color="#ba9dde" /></el-col>
         <el-col class="item endItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本日生日" :value="monthList" color="#eb746e" /></el-col>
       </el-row>
@@ -24,7 +24,6 @@
 <script>
 import BirthdayCred from '@/components/birthdayCred/index.vue';
 import dayjs from 'dayjs';
-import { queryBirthdayManage } from "@/api/birthday";
 
 export default {
   props: {},
@@ -33,7 +32,26 @@ export default {
       curDay: dayjs().date(),
       curWeek: dayjs().day(),
       curMonth: dayjs().month(),
-      tableData: [],
+      tableData: [
+        {
+          name: '申孟涛',
+          nickName: '',
+          birthdayTime: '866246400000',
+          gender: '0',
+        },
+        {
+          name: '贺佳勒1',
+          nickName: '乐乐1',
+          birthdayTime: '1630980629489',
+          gender: '1',
+        },
+        {
+          name: '贺佳勒2',
+          nickName: '乐乐2',
+          birthdayTime: '1630980629489',
+          gender: '2',
+        },
+      ],
     };
   },
   computed: {
@@ -70,16 +88,10 @@ export default {
       });
     },
   },
-  async created() {
-    await this.queryBirthdayManage();
-  },
+  created() {},
   mounted() {},
   watch: {},
   methods: {
-    async queryBirthdayManage() {
-      const { data } = await queryBirthdayManage();
-      this.tableData = data;
-    },
     getNameItem({ name, nickName }) {
       let rtnName = name;
       if (nickName) {

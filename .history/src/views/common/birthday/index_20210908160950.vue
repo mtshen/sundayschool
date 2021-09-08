@@ -33,7 +33,26 @@ export default {
       curDay: dayjs().date(),
       curWeek: dayjs().day(),
       curMonth: dayjs().month(),
-      tableData: [],
+      tableData: [
+        {
+          name: '申孟涛',
+          nickName: '',
+          birthdayTime: '866246400000',
+          gender: '0',
+        },
+        {
+          name: '贺佳勒1',
+          nickName: '乐乐1',
+          birthdayTime: '1630980629489',
+          gender: '1',
+        },
+        {
+          name: '贺佳勒2',
+          nickName: '乐乐2',
+          birthdayTime: '1630980629489',
+          gender: '2',
+        },
+      ],
     };
   },
   computed: {
@@ -77,8 +96,9 @@ export default {
   watch: {},
   methods: {
     async queryBirthdayManage() {
-      const { data } = await queryBirthdayManage();
-      this.tableData = data;
+      queryBirthdayManage().then(({ code, data }) => {
+
+      });
     },
     getNameItem({ name, nickName }) {
       let rtnName = name;

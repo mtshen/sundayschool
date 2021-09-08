@@ -2,9 +2,9 @@
   <div>
     <template>
       <el-row class="rowItem" :gutter="20">
-        <el-col class="item startItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本月生日" :value="dayList" color="#F8A94A" /></el-col>
-        <el-col class="item" :xs="24" :md="12" :lg="8"><BirthdayCred title="本周生日" :value="weekList" color="#ba9dde" /></el-col>
-        <el-col class="item endItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本日生日" :value="monthList" color="#eb746e" /></el-col>
+        <el-col class="item startItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本月生日" value="1" color="#cad9fd" /></el-col>
+        <el-col class="item" :xs="24" :md="12" :lg="8"><BirthdayCred title="本周生日" value="1" color="#ba9dde" /></el-col>
+        <el-col class="item endItem" :xs="24" :md="12" :lg="8"><BirthdayCred title="本日生日" value="1" color="#eb746e" /></el-col>
       </el-row>
       <el-table size="mini" :data="tableData" style="width: 100%">
         <el-table-column prop="name" label="姓名" sortable>
@@ -23,17 +23,32 @@
 
 <script>
 import BirthdayCred from '@/components/birthdayCred/index.vue';
-import dayjs from 'dayjs';
-import { queryBirthdayManage } from "@/api/birthday";
+import day from "dayjs";
 
 export default {
   props: {},
   data() {
     return {
-      curDay: dayjs().date(),
-      curWeek: dayjs().day(),
-      curMonth: dayjs().month(),
-      tableData: [],
+      tableData: [
+        {
+          name: '贺佳勒',
+          nickName: '乐乐',
+          birthdayTime: '1630980629489',
+          gender: '0',
+        },
+        {
+          name: '贺佳勒1',
+          nickName: '乐乐1',
+          birthdayTime: '1630980629489',
+          gender: '1',
+        },
+        {
+          name: '贺佳勒2',
+          nickName: '乐乐2',
+          birthdayTime: '1630980629489',
+          gender: '2',
+        },
+      ],
     };
   },
   computed: {
@@ -41,45 +56,20 @@ export default {
       const { tableData } = this;
       return tableData.map(item => {
         const itemData = { ...item };
-        const curItemDay = dayjs(item.birthdayTime);
+        const curItemDay = day(item.birthdayTime);
         itemData.constellation = getConstellation(curItemDay.month(), curItemDay.day());
         return itemData;
       });
     },
-    monthList() {
-      const { tableData, curMonth } = this;
-      return tableData.filter(item => {
-        const curItemMonth = dayjs(item.birthdayTime).month();
-        return curItemMonth === curMonth;
-      });
-    },
-    weekList() {
-      const { tableData, curMonth, curWeek } = this;
-      return tableData.filter(item => {
-        const curItemMonth = dayjs(item.birthdayTime).month();
-        const curItemWeek = dayjs(item.birthdayTime).day();
-        return curItemMonth === curMonth && curItemWeek === curWeek;
-      });
-    },
-    dayList() {
-      const { tableData, curMonth, curDay } = this;
-      return tableData.filter(item => {
-        const curItemMonth = dayjs(item.birthdayTime).month();
-        const curItemDay = dayjs(item.birthdayTime).day();
-        return curItemMonth === curMonth && curItemDay === curDay;
-      });
+    monthValue() {
+      // 当前时间 + 1月 是否大于出生日期 + 当前岁 + 1
+      day().add(1, 'month')
     },
   },
-  async created() {
-    await this.queryBirthdayManage();
-  },
+  created() {},
   mounted() {},
   watch: {},
   methods: {
-    async queryBirthdayManage() {
-      const { data } = await queryBirthdayManage();
-      this.tableData = data;
-    },
     getNameItem({ name, nickName }) {
       let rtnName = name;
       if (nickName) {
@@ -88,7 +78,7 @@ export default {
       return rtnName;
     },
     // 查询星座
-    getConstellation(m, d){
+    getConstellation(m, d){ 
       const s="魔羯水瓶双鱼牡羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯";
       const arr=[20,19,21,21,21,22,23,23,23,23,22,22];
       return s.substr(m*2-(d<arr[m-1]?2:0),2);

@@ -1,5 +1,4 @@
 import Birthday from '@/views/common/birthday/index.vue';
-import BirthdayManagePc from '@/views/pc/birthday/manage.vue';
 import BirthdayManageMobile from '@/views/mobile/birthday/manage.vue';
 
 const routerConf = [
@@ -12,7 +11,7 @@ const routerConf = [
   {
     path: 'BirthdayManage',
     name: 'BirthdayManage',
-    pcComponent: BirthdayManagePc,
+    pcComponent: BirthdayManageMobile,
     mobileComponent: BirthdayManageMobile,
   },
 ];
