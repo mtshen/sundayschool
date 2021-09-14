@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import dayjs from 'dayjs';
-
 export default {
   props: {
     title: String,
@@ -67,7 +65,6 @@ export default {
   position: relative;
   user-select: none;
   cursor: pointer;
-  overflow: auto;
 
   .title {
     font-size: 30px;

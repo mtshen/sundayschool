@@ -1,11 +1,10 @@
 <template>
   <div class="credItem" :style="{ background: color }" @click="changeDetails">
-    <template v-if="isDetails">
+    <template v-if="isDetails && value.length">
       <p v-for="(item, index) in value" :key="index">
         {{ getNameItem(item) }}({{ getBirthDayText(item) }})
       </p>
     </template>
-
     <template v-else>
       <span class="title">{{ title }}</span>
       <span class="value">{{ value.length }}</span>
@@ -15,8 +14,6 @@
 </template>
 
 <script>
-import dayjs from 'dayjs';
-
 export default {
   props: {
     title: String,
@@ -28,9 +25,7 @@ export default {
       isDetails: false
     };
   },
-  computed: {
-    // isShowDetaile() {},
-  },
+  computed: {},
   created() {},
   mounted() {},
   watch: {},
@@ -67,7 +62,6 @@ export default {
   position: relative;
   user-select: none;
   cursor: pointer;
-  overflow: auto;
 
   .title {
     font-size: 30px;

@@ -67,7 +67,6 @@ export default {
   position: relative;
   user-select: none;
   cursor: pointer;
-  overflow: auto;
 
   .title {
     font-size: 30px;
